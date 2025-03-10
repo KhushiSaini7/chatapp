@@ -67,7 +67,7 @@ Choice of components and how they interact
 
 2. ***SCALABILITY***:
 
-    Handling increased loads?
+    # Handling increased loads?
  
  i) Horizontal Scaling: When horizontal scaling is employed, the system strategically expands its capacity by adding more instances of key 
     components such as the API Gateway, Chat Service, and LLM Workers. This expansion allows the system to effectively distribute the 
@@ -90,70 +90,83 @@ iv) Database Optimization: Database optimization involves sharding the database 
     enhancing the responsiveness of the chat application.
 
 
-#How the infrastructure scales to support 10,000 users:
+   # How the infrastructure scales to support 10,000 users:
 
-API Gateway: Scale the API Gateway horizontally to handle increased incoming traffic. Load balancers distribute requests across multiple instances of the API Gateway.
+   API Gateway: Scale the API Gateway horizontally to handle increased incoming traffic. Load balancers distribute requests across multiple 
+   instances of the API Gateway.
 
-Chat Service: Scale the Chat Service horizontally. Deploy multiple instances of the Chat Service behind a load balancer to distribute the load.
+   Chat Service: Scale the Chat Service horizontally. Deploy multiple instances of the Chat Service behind a load balancer to distribute 
+   the load.
 
-LLM Workers: Increase the number of LLM Worker instances. Monitor the message queue and LLM API usage to scale these workers based on demand.
+   LLM Workers: Increase the number of LLM Worker instances. Monitor the message queue and LLM API usage to scale these workers based on 
+   demand.
 
-Database: Employ database sharding to distribute the data load across multiple servers. Use read replicas to handle increased read traffic, reducing the load on the primary database.
+   Database: Employ database sharding to distribute the data load across multiple servers. Use read replicas to handle increased read 
+   traffic, reducing the load on the primary database.
 
-Cache: Scale the Redis cache to accommodate more cached data. This reduces database load and improves response times.
+   Cache: Scale the Redis cache to accommodate more cached data. This reduces database load and improves response times.
 
-Message Queue: Use a Kafka cluster with multiple partitions for high throughput. Monitor the message queue length to ensure the system can handle the message processing load.
-With these strategies, the infrastructure can effectively handle 10,000 users.
+   Message Queue: Use a Kafka cluster with multiple partitions for high throughput. Monitor the message queue length to ensure the system 
+   can handle the message processing load.
+   With these strategies, the infrastructure can effectively handle 10,000 users.
 
-#Potential bottlenecks in this design:
-LLM API Rate Limits: LLM APIs (like OpenAI) have rate limits. Implement retry mechanisms and consider using multiple API keys or providers.
+  
 
-Database Performance: Ensure the database is properly indexed and optimized for read/write operations.
+   # Potential bottlenecks in this design:
+   LLM API Rate Limits: LLM APIs (like OpenAI) have rate limits. Implement retry mechanisms and consider using multiple API keys or 
+   providers.
 
-Network Latency: Optimize network connections between services to reduce latency.
+   Database Performance: Ensure the database is properly indexed and optimized for read/write operations.
 
-Cache Invalidation: Implement a robust cache invalidation strategy to ensure data consistency.
+   Network Latency: Optimize network connections between services to reduce latency.
 
-Message Queue Congestion: Monitor the message queue for congestion.
+   Cache Invalidation: Implement a robust cache invalidation strategy to ensure data consistency.
+
+   Message Queue Congestion: Monitor the message queue for congestion.
 
 
-#Strategy for horizontal and vertical scaling
+   # Strategy for horizontal and vertical scaling
 
-Our scaling strategy focuses on both horizontal and vertical approaches to ensure that our system can efficiently handle increased traffic and data load.
+   Our scaling strategy focuses on both horizontal and vertical approaches to ensure that our system can efficiently handle increased 
+   traffic and data load.
 
-Horizontal Scaling
-Stateless Backend & Frontend:
-The FastAPI backend and frontend components are designed to be stateless. This allows us to add more instances (replicas) behind a load balancer to distribute incoming HTTP requests evenly. In a production environment, an API Gateway or load balancer (like NGINX or cloud-managed solutions) can automatically route traffic to these instances.
+   Horizontal Scaling
+   Stateless Backend & Frontend:
+   The FastAPI backend and frontend components are designed to be stateless. This allows us to add more instances (replicas) behind a load 
+   balancer to distribute incoming HTTP requests evenly. In a production environment, an API Gateway or load balancer (like NGINX or cloud- 
+   managed solutions) can automatically route traffic to these instances.
 
-Distributed Caching:
-We use Redis to cache frequently accessed data. Redis can be configured in a clustered mode, distributing data across multiple nodes, which increases both performance and fault tolerance.
+   Distributed Caching:
+   We use Redis to cache frequently accessed data. Redis can be configured in a clustered mode, distributing data across multiple nodes, 
+   which increases both performance and fault tolerance.
 
-Database Read Replicas:
-PostgreSQL supports the creation of read replicas. By offloading read queries to replicas while writing to the master database, we can distribute the query load and reduce latency.
+   Database Read Replicas:
+   PostgreSQL supports the creation of read replicas. By offloading read queries to replicas while writing to the master database, we can 
+   distribute the query load and reduce latency.
+ 
+   Microservices and API Gateways:
+   By decoupling services (e.g., authentication, conversation management, LLM integration), each component can be independently scaled. An 
+   API gateway can route requests to the appropriate service instances, enabling us to add more instances as demand increases.
 
-  Microservices and API Gateways:
-  By decoupling services (e.g., authentication, conversation management, LLM integration), each component can be independently scaled. An 
-  API gateway can route requests to the appropriate service instances, enabling us to add more instances as demand increases.
+   Vertical Scaling
+   Resource Upgrades:
+   For components that are resource-intensive or stateful (like the database or Redis), we can increase the CPU, memory, or storage of the 
+   underlying servers. This ensures that individual components can handle higher loads without becoming a bottleneck.
 
-  Vertical Scaling
-  Resource Upgrades:
-  For components that are resource-intensive or stateful (like the database or Redis), we can increase the CPU, memory, or storage of the 
-  underlying servers. This ensures that individual components can handle higher loads without becoming a bottleneck.
+   Optimizing LLM Integration:
+   Although our LLM service is externally managed, our local processing (like prompt engineering, caching responses, and embedding 
+   generation with FAISS) can benefit from more powerful machines. Vertical scaling here means using more powerful servers to decrease 
+   processing time and improve response latency.
 
-  Optimizing LLM Integration:
-  Although our LLM service is externally managed, our local processing (like prompt engineering, caching responses, and embedding 
-  generation with FAISS) can benefit from more powerful machines. Vertical scaling here means using more powerful servers to decrease 
-  processing time and improve response latency.
-
-  Database Performance:
-  Vertical scaling of PostgreSQL (using high-performance instance types) ensures that complex queries and transactional workloads run 
-  efficiently. Additionally, fine-tuning configuration parameters helps maximize performance under increased load.
+   Database Performance:
+   Vertical scaling of PostgreSQL (using high-performance instance types) ensures that complex queries and transactional workloads run 
+   efficiently. Additionally, fine-tuning configuration parameters helps maximize performance under increased load.
 
 
 3. ***RELIABILITY***
 
 
-   #HANDLING SYSTEM FAILURES
+   # HANDLING SYSTEM FAILURES
     Redundancy: Deploy multiple instances of each service to ensure high availability.
 
     Automatic Failover: Use load balancers and orchestration tools (e.g., Kubernetes) to automatically reroute traffic away from failing 
@@ -186,7 +199,7 @@ PostgreSQL supports the creation of read replicas. By offloading read queries to
 
 4. ***COST CONSIDERATION***
 
-   #APPROACH FOR MANAGING OPERATIONAL COST
+   # APPROACH FOR MANAGING OPERATIONAL COST
    Containerization & Auto-Scaling: Provision resources dynamically based on demand.
    
    Database Optimization: Use indexing and read replicas to reduce overhead.
@@ -198,7 +211,7 @@ PostgreSQL supports the creation of read replicas. By offloading read queries to
    Continuous Monitoring: Employ Prometheus and Grafana for proactive resource adjustments and cost control.
 
 
-   #EFFICIENCY CONSIDERATIONS FOR AN LLM_BASED SYSTEM
+   # EFFICIENCY CONSIDERATIONS FOR AN LLM_BASED SYSTEM
 
    Prompt Optimization:
    Use concise, clear prompts to reduce token usage and API costs.
@@ -229,7 +242,7 @@ PostgreSQL supports the creation of read replicas. By offloading read queries to
 
 5. . ***ML/AI INTEGRATION***
 
-   #LLM INTEGRATION STRATEGY
+   # LLM INTEGRATION STRATEGY
    Client Abstraction: Integrate external LLM providers (e.g., OpenAI, Anthropic) through a dedicated client interface for flexibility.
    Asynchronous API Calls: Use asynchronous calls (with retries) to handle multiple LLM requests concurrently without blocking.
    Retrieval-Augmented Generation (RAG): Enhance prompts by appending context retrieved from a FAISS-based knowledge base, applied 
@@ -239,7 +252,7 @@ PostgreSQL supports the creation of read replicas. By offloading read queries to
 
 
 
-   #Approach to context management and prompt engineering
+   # Approach to context management and prompt engineering
 
    Context Management:
    My approach to context management revolves around maintaining a robust conversation history and selectively integrating external 
@@ -257,7 +270,7 @@ PostgreSQL supports the creation of read replicas. By offloading read queries to
 
 
 
-   #Detail any advanced techniques like RAG, fine-tuning, or few-shot learning
+   # Detail any advanced techniques like RAG, fine-tuning, or few-shot learning
     Retrieval-Augmented Generation (RAG):
     In our project, we use a technique called Retrieval-Augmented Generation (RAG) to boost the quality of the responses. Essentially, when 
     a user sends a query, we quickly search through a pre-built knowledge base—using tools like FAISS along with sentence embeddings—to 
