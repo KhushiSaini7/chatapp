@@ -49,7 +49,7 @@ ChatApp is a production-ready, scalable chatbot system powered by a Large Langua
 
 ### Architecture Diagram
 ```mermaid
-graph TD;
+graph TD
     A[Client (Web/Mobile/Postman)]
     B[Frontend (User Interface)]
     C[Backend API (FastAPI)]
