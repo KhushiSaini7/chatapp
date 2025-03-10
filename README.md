@@ -177,30 +177,41 @@ Python (3.9.12 or later)
 MySQL or PostgreSQL (depending on your setup)
 Required Python packages (see requirements.txt)
 Steps to Deploy
+
+
 Clone the Repository:
 
 bash
 Copy
 Edit
+```bash
 git clone https://github.com/yourusername/chatapp.git
 cd chatapp
+```
+
 Create and Activate a Virtual Environment:
 
 bash
 Copy
 Edit
+
+
+```bash
 python -m venv venv
 # On macOS/Linux:
 source venv/bin/activate
 # On Windows:
 venv\Scripts\activate
+```
 Install Required Packages:
 
 bash
 Copy
 Edit
+```bash
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
+```
 
 
 
@@ -210,11 +221,13 @@ Create a .env file (or set environment variables) with:
 env
 Copy
 Edit
+```bash
 POSTGRES_USER=your_db_user
 POSTGRES_PASSWORD=your_db_password
 POSTGRES_DB=your_db_name
 OPENAI_API_KEY=your_openai_api_key
 SECRET_KEY=your_jwt_secret_key
+```
 
 
 Set Up the Database:
@@ -226,7 +239,11 @@ Start the FastAPI application:
 bash
 Copy
 Edit
+```bash
 uvicorn app.main:app --reload --port 8000
+```
+
+
 Access the Application:
 
 Backend API: http://localhost:8000
