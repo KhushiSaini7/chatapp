@@ -48,6 +48,26 @@ ChatApp is a production-ready, scalable chatbot system powered by a Large Langua
 ## System Architecture
 
 ### Architecture Diagram
+```mermaid
+graph TD;
+    A[Client (Web/Mobile/Postman)]
+    B[Frontend (User Interface)]
+    C[Backend API (FastAPI)]
+    D[Authentication Service (JWT/OAuth2)]
+    E[Database (PostgreSQL)]
+    F[Cache (Redis)]
+    G[LLM Service (OpenAI/Anthropic)]
+    H[Knowledge Base (FAISS + Embeddings)]
+    I[Monitoring & Logging (Prometheus/Grafana)]
+
+    A -->|HTTP Requests| B
+    B -->|API Calls| C
+    C -->|Auth Requests| D
+    C -->|Data Storage| E
+    C -->|Caching| F
+    C -->|LLM Queries| G
+    G -->|Context Retrieval| H
+    C -->|Metrics & Logs| I
 
 
 
@@ -91,6 +111,9 @@ Design efficient LLM prompts to reduce token usage and latency.
 Bottleneck Mitigation:
 Address potential bottlenecks (e.g., database or LLM service latency) through caching, asynchronous processing, and resource scaling.
 
+
+
+
 Reliability
 Failure Handling:
 Implement health checks and automatic retries (e.g., using Tenacity) for transient errors.
@@ -99,6 +122,9 @@ Maintaining Service Quality:
 Deploy redundant instances across multiple nodes or availability zones.
 Regularly back up critical data.
 Monitor system performance in real time with Prometheus and Grafana.
+
+
+
 
 
 Cost Considerations
@@ -175,10 +201,12 @@ Copy
 Edit
 pip install -r requirements.txt
 python -m spacy download en_core_web_sm
+
+
+
+
 Configure Environment Variables:
-
 Create a .env file (or set environment variables) with:
-
 env
 Copy
 Edit
@@ -187,13 +215,14 @@ POSTGRES_PASSWORD=your_db_password
 POSTGRES_DB=your_db_name
 OPENAI_API_KEY=your_openai_api_key
 SECRET_KEY=your_jwt_secret_key
+
+
 Set Up the Database:
-
 Create the necessary database (e.g., MySQL or PostgreSQL) and update the connection details in app/database.py.
+
+
 Run the Application:
-
 Start the FastAPI application:
-
 bash
 Copy
 Edit
