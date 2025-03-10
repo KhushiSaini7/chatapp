@@ -304,7 +304,7 @@ iv) Database Optimization: Database optimization involves sharding the database 
 
 
 
-    #Explain your approach to evaluating and improving response quality
+    # Explain your approach to evaluating and improving response quality
 
     In my approach to evaluating and improving response quality, I start by closely monitoring both quantitative metrics and qualitative 
     feedback. I use tools like Prometheus and Grafana to track performance indicators such as response times and error rates, while also 
@@ -318,7 +318,7 @@ iv) Database Optimization: Database optimization involves sharding the database 
 
 
 
-    #Detail your strategy for handling model failures and fallbacks
+    # Detail your strategy for handling model failures and fallbacks
     In my project, I handle model failures by designing a robust fallback strategy that ensures users still get a response even if the 
     primary model experiences issues. I use asynchronous retries and circuit breakers to catch errors quickly, and if my primary LLM (like 
     OpenAI) fails or times out, I automatically switch to an alternative provider. I also cache recent successful responses so that, in 
