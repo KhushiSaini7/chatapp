@@ -13,9 +13,6 @@ ChatApp is a production-ready, scalable chatbot system powered by a Large Langua
 - [System Architecture](#system-architecture)
 - [Repository Structure](#repository-structure)
 - [Deployment Instructions](#deployment-instructions)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
 
 ---
 
