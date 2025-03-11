@@ -1,6 +1,6 @@
 1. ***SYSTEM ARCHITECTURE***
 
-appropriate Diagram:
+Appropriate Diagram:
 
 graph TD
     A[Client (Web / Mobile)]
