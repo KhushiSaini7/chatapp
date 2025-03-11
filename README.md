@@ -183,6 +183,7 @@ Copy
 Edit
 ```bash
 uvicorn app.main:app --reload --port 8000
+streamlit run frontend/app.py
 ```
 
 
