@@ -118,7 +118,7 @@ MySQL or PostgreSQL (depending on your setup)
 Required Python packages (see requirements.txt)
 Steps to Deploy
 
-
+```
 Clone the Repository:
 
 bash
