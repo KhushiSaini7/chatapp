@@ -94,19 +94,21 @@ Tools like Prometheus and Grafana track system performance and log key metrics t
 
 
 
+```bash
 chatapp/
 ├── app/
 │   ├── __init__.py
-│   ├── main.py           # Main FastAPI application
-│   ├── models.py         # SQLAlchemy models
-│   ├── database.py       # Database connection and ORM setup
-│   ├── auth.py           # Authentication logic (JWT/OAuth2)
+│   ├── main.py                 # Main FastAPI application
+│   ├── models.py               # SQLAlchemy models
+│   ├── database.py             # Database connection and ORM setup
+│   ├── auth.py                 # Authentication logic (JWT/OAuth2)
 │   ├── advanced_llmservice.py  # LLM integration and RAG implementation
-│   └── monitoring.py     # Prometheus metrics and logging
-├── README.md             # Project documentation
+│   └── monitoring.py           # Prometheus metrics and logging
+├── README.md                   # Project documentation
 └── docs/
-    ├── system_architecture.png    # Detailed architecture diagram
-    └── additional_docs.md         # Additional documentation if needed
+    ├── system_architecture.png # Detailed architecture diagram
+    └── additional_docs.md      # Additional documentation if needed
+
 
 
 Deployment Instructions
