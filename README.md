@@ -164,9 +164,8 @@ env
 Copy
 Edit
 ```bash
-POSTGRES_USER=your_db_user
-POSTGRES_PASSWORD=your_db_password
-POSTGRES_DB=your_db_name
+REDIS_URL=_redis_url
+ANTHROPIC_API_KEY=your_anthropic_key
 OPENAI_API_KEY=your_openai_api_key
 SECRET_KEY=your_jwt_secret_key
 ```
